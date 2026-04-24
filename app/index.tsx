@@ -18,6 +18,7 @@ export default function LibraryScreen() {
   const router = useRouter();
   const [data, setData] = useState(books);
   const [refreshing, setRefreshing] = useState(false);
+  const [isSwiping, setIsSwiping] = useState(false); // 🔥 FIX
 
   const handleRefresh = () => {
     setRefreshing(true);
@@ -77,10 +78,18 @@ export default function LibraryScreen() {
         renderItem={({ item }) => (
           <Swipeable
             renderRightActions={() => renderRightActions(item.id)}
-            overshootRight={false}>
+            overshootRight={false}
+            onSwipeableWillOpen={() => setIsSwiping(true)} // 🔥 FIX
+            onSwipeableClose={() => setIsSwiping(false)} // 🔥 FIX
+          >
             <BookItem
               item={item}
-              onPress={() => router.push(`/book/${item.id}`)}
+              onPress={() => {
+                if (!isSwiping) {
+                  // 🔥 FIX
+                  router.push(`/book/${item.id}`);
+                }
+              }}
             />
           </Swipeable>
         )}
@@ -107,6 +116,7 @@ const styles = StyleSheet.create({
   header: {
     backgroundColor: "#5B5AE6",
     padding: 16,
+    paddingTop: 10,
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
   },
