@@ -1,6 +1,7 @@
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { Image, Pressable, Text, View, StyleSheet } from "react-native";
 import { books } from "../../data/books";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Detail() {
   const { id } = useLocalSearchParams();
@@ -11,7 +12,7 @@ export default function Detail() {
   if (!book) return null;
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerText}>Chi tiết sách</Text>
       </View>
@@ -31,7 +32,7 @@ export default function Detail() {
           <Text style={styles.buttonText}>Quay lại</Text>
         </Pressable>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
